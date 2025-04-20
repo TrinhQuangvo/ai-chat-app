@@ -9,7 +9,6 @@ async function startSeeding() {
     await seedRoles();
     await seedUsers();
     await seedRooms();
-    // await seedMessages();
 
     console.log("✅ Seeding completed.");
   } catch (err) {

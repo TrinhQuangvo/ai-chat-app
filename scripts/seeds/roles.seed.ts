@@ -1,10 +1,10 @@
-import { randomUUID } from "crypto";
+import { ROLES } from "@/constants/seed.constant";
 import dotenv from "dotenv";
 import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
 import * as schemas from "../../drizzle/schemas";
-import { Role, roles } from "../../drizzle/schemas";
+import { roles } from "../../drizzle/schemas";
 
 dotenv.config();
 
@@ -23,12 +23,6 @@ const roleExists = async (db: any, name: string) => {
   });
 };
 export async function seedRoles() {
-  const ROLES: Role[] = [
-    { id: randomUUID(), name: "admin", createdAt: new Date() },
-    { id: randomUUID(), name: "user", createdAt: new Date() },
-    { id: randomUUID(), name: "bot", createdAt: new Date() },
-  ] as Role[];
-
   const client = getDatabaseClient();
   const db = drizzle(client, { schema: schemas });
 

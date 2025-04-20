@@ -7,9 +7,10 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (req: NextRequest) => {
   try {
-    const { username, password } = await req.json();
+    const body = await req.json();
+    const SALT_ROUNDS = 10;
 
-    if (!username || !password) {
+    if (!body.username || !body.password) {
       return NextResponse.json<ResponseError>(
         { success: false, message: "Username and password are required" },
         { status: 400 }
@@ -20,9 +21,10 @@ export const POST = async (req: NextRequest) => {
     const existingUser = await db
       .select()
       .from(users)
-      .where(eq(users.username, username));
+      .where(eq(users.username, body.username))
+      .execute();
 
-    if (existingUser) {
+    if (existingUser.length > 0) {
       return NextResponse.json<ResponseError>(
         { success: false, message: "Username already taken" },
         { status: 400 }
@@ -30,7 +32,7 @@ export const POST = async (req: NextRequest) => {
     }
 
     // Hash password
-    const hashedPassword = await hash(password, 10);
+    const hashedPassword = await hash(body.password, SALT_ROUNDS);
 
     // Create default bio
     const bioData = await db
@@ -50,19 +52,20 @@ export const POST = async (req: NextRequest) => {
     const defaultRole = await db
       .select()
       .from(roles)
-      .where(eq(roles.name, "user"));
+      .where(eq(roles.name, "user"))
+      .execute();
 
-    if (!defaultRole) {
+    if (!defaultRole.length) {
       return NextResponse.json<ResponseError>(
         { success: false, message: "Failed to set up user role" },
         { status: 500 }
       );
     }
 
-    const data = await db
+    const newUser = await db
       .insert(users)
       .values({
-        username,
+        username: body.username,
         password: hashedPassword,
         bioId: bioData[0].id,
         roleId: defaultRole[0].id,
@@ -72,7 +75,7 @@ export const POST = async (req: NextRequest) => {
     return NextResponse.json<ResponseSuccess<User>>({
       success: true,
       message: "User registered successfully",
-      data: data[0],
+      data: newUser[0]
     });
   } catch (error) {
     console.error("Registration error:", error);
