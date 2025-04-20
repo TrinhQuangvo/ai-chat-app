@@ -1,4 +1,7 @@
+"use client";
+
 import React from "react";
+import QueryProvider from "../../providers/query-provider";
 
 type AuthLayoutProps = {
   children: React.ReactNode;
@@ -6,9 +9,11 @@ type AuthLayoutProps = {
 
 const AuthLayout = ({ children }: AuthLayoutProps) => {
   return (
-    <div className="flex items-center w-full justify-center h-screen bg-gray-100">
-      {children}
-    </div>
+    <QueryProvider>
+      <div className="flex items-center w-full justify-center h-screen bg-gray-100">
+        {children}
+      </div>
+    </QueryProvider>
   );
 };
 

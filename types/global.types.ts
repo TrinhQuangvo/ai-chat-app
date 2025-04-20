@@ -6,5 +6,5 @@ export type ResponseError = {
 export type ResponseSuccess<T> = {
   success: true;
   message: string;
-  data: T;
+  data?: T;
 };

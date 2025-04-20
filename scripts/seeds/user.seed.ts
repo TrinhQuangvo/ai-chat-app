@@ -1,5 +1,5 @@
+import { USERS } from "@/constants/seed.constant";
 import bcrypt from "bcrypt";
-import { randomUUID } from "crypto";
 import dotenv from "dotenv";
 import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/node-postgres";
@@ -9,48 +9,7 @@ import { roles, users } from "../../drizzle/schemas";
 
 dotenv.config({ path: "./.env" });
 
-// Seed data
-const USERS = [
-  {
-    id: randomUUID(),
-    username: "admin",
-    password: "123456",
-    role: "admin",
-    bio: {
-      firstName: "admin",
-      lastName: "",
-      backupEmail: "",
-      phoneNumber: "",
-      address: "",
-    },
-  },
-  {
-    id: randomUUID(),
-    username: "guest",
-    password: "123456",
-    role: "user",
-    bio: {
-      firstName: "guest",
-      lastName: "",
-      backupEmail: "",
-      phoneNumber: "",
-      address: "",
-    },
-  },
-  {
-    id: randomUUID(),
-    username: "bot",
-    password: "123456",
-    role: "bot",
-    bio: {
-      firstName: "bot",
-      lastName: "",
-      backupEmail: "",
-      phoneNumber: "",
-      address: "",
-    },
-  },
-];
+
 
 // Setup DB client
 const getDatabaseClient = (): Pool => {

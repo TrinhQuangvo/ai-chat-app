@@ -1,10 +1,10 @@
-import { randomUUID } from "crypto";
-import { eq } from "drizzle-orm";
-import { Pool } from "pg";
+import { ROOMS } from "@/constants/seed.constant";
 import dotenv from "dotenv";
+import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/node-postgres";
-import { rooms } from "../../drizzle/schemas";
+import { Pool } from "pg";
 import * as schemas from "../../drizzle/schemas";
+import { rooms } from "../../drizzle/schemas";
 
 dotenv.config();
 
@@ -25,26 +25,8 @@ export async function seedRooms() {
   const client = getDatabaseClient();
   const db = drizzle(client, { schema: schemas });
 
-  const roomList = [
-    {
-      id: randomUUID(),
-      name: "General Chat 🧃",
-      createdAt: new Date(),
-    },
-    {
-      id: randomUUID(),
-      name: "Fun Zone 🍿",
-      createdAt: new Date(),
-    },
-    {
-      id: randomUUID(),
-      name: "Random Not Safe For Work 😭",
-      createdAt: new Date(),
-    },
-  ];
-
   try {
-    for (const room of roomList) {
+    for (const room of ROOMS) {
       if (await roomExists(db, room.name)) {
         console.log(`⚠️ Room '${room.name}' đã tồn tại. Bỏ qua.`);
         continue;
@@ -54,7 +36,7 @@ export async function seedRooms() {
       console.log(`✅ Tạo room '${room.name}' thành công.`);
     }
 
-    return roomList;
+    return ROOMS;
   } catch (err) {
     console.error("❌ Lỗi khi seed room:", err);
   } finally {
