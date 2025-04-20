@@ -9,4 +9,4 @@ const LoginLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   );
 };
 
-export default LoginLayout;
+export default LoginLayout; 
