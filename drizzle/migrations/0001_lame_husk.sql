@@ -1,0 +1,1 @@
+ALTER TABLE "users" ALTER COLUMN "bio_id" DROP NOT NULL;

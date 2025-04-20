@@ -1,15 +1,27 @@
 import { relations } from "drizzle-orm";
-import { users } from "./users.schema";
-import { rooms } from "./rooms.schema";
-import { messages } from "./messages.schema";
 import { bio } from "./bio.schema";
+import { messages } from "./messages.schema";
+import { roles } from "./roles.schema";
+import { rooms } from "./rooms.schema";
+import { users } from "./users.schema";
+import { roomUsers } from "./room_users.schema";
 
-export const usersRelations = relations(users, ({ many }) => ({
+export const usersRelations = relations(users, ({ many, one }) => ({
   messages: many(messages),
+  role: one(roles, {
+    fields: [users.roleId],
+    references: [roles.id],
+  }),
+  bio: one(bio, {
+    fields: [users.bioId],
+    references: [bio.id],
+  }),
+  roomUsers: many(roomUsers),
 }));
 
 export const roomsRelations = relations(rooms, ({ many }) => ({
   messages: many(messages),
+  roomUsers: many(roomUsers),
 }));
 
 export const messagesRelations = relations(messages, ({ one }) => ({
@@ -23,9 +35,13 @@ export const messagesRelations = relations(messages, ({ one }) => ({
   }),
 }));
 
-export const bioRelations = relations(bio, ({ one }) => ({
+export const roomMembersRelations = relations(roomUsers, ({ one }) => ({
   user: one(users, {
-    fields: [bio.userId],
+    fields: [roomUsers.userId],
     references: [users.id],
+  }),
+  room: one(rooms, {
+    fields: [roomUsers.roomId],
+    references: [rooms.id],
   }),
 }));

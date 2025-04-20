@@ -1,14 +1,10 @@
 import { pgTable, timestamp, uuid, text, varchar } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
-import { users } from "./users.schema";
 
 export const bio = pgTable("bio", {
   id: uuid("id")
     .primaryKey()
     .default(sql`gen_random_uuid()`),
-  userId: uuid("user_id")
-    .notNull()
-    .references(() => users.id),
   description: text("bio").notNull(),
   firstName: varchar("first_name", { length: 100 }).notNull(),
   lastName: varchar("last_name", { length: 100 }).notNull(),
@@ -17,3 +13,5 @@ export const bio = pgTable("bio", {
   address: varchar("address", { length: 100 }).notNull(),
   createdAt: timestamp("created_at").defaultNow(),
 });
+
+export type Bio = typeof bio.$inferSelect;
