@@ -1,4 +1,4 @@
-import LoginTemplate from "@/components/templates/login";
+import LoginTemplate from "@/src/components/templates/login";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

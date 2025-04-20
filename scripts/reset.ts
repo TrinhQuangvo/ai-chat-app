@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm"; 
-import { db } from "../libs/db";
+import { db } from "../lib/db";
 
 async function reset() {
   await db.execute(sql.raw("DROP SCHEMA public CASCADE;"));

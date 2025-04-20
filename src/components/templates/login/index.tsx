@@ -25,7 +25,6 @@ export default function LoginTemplate() {
   };
 
   return (
-    <div className="flex items-center w-full justify-center h-screen bg-gray-100">
       <Card className="w-full max-w-lg rounded-lg shadow-xl">
         <CardContent className="p-6 space-y-4">
           <h1 className="text-xl font-bold">Login</h1>
@@ -58,7 +57,6 @@ export default function LoginTemplate() {
             </a>
           </p>
         </CardContent>
-      </Card>
-    </div>
+      </Card> 
   );
 }

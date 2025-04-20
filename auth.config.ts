@@ -1,5 +1,5 @@
 import { users } from "./drizzle/schemas";
-import { db } from "./libs/db";
+import { db } from "./lib/db";
 import { AuthOptions, Session, DefaultSession } from "next-auth";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import Credentials from "next-auth/providers/credentials";
