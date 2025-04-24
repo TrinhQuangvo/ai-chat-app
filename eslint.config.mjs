@@ -14,25 +14,26 @@ const eslintConfig = [
   {
     rules: {
       "@typescript-eslint/no-explicit-any": "off",
-      "import/order": ["error", {
-        "groups": ["builtin", "external", "internal"],
-        "pathGroups": [
+      "import/order": ["error",   {
+        groups: ["builtin", "external", "internal"],
+        pathGroups: [
           {
-            "pattern": "react",
-            "group": "external",
-            "position": "before"
+            pattern: "react",
+            group: "external",
+            position: "before",
           }
         ],
-        "pathGroupsExcludedImportTypes": ["react"],
-        "newlines-between": "always",
-        "alphabetize": {
-          "order": "asc",
-          "caseInsensitive": true
-        }
-      }],
-      "tailwindcss/classnames-order": "error"
-    }
-  }
+          pathGroupsExcludedImportTypes: ["react"],
+          newlinesBetween: "always",
+          alphabetize: {
+            order: "asc",
+            caseInsensitive: true,
+          },
+        },
+      ], 
+      "tailwindcss/classnames-order": "error",
+    },
+  },
 ];
 
 export default eslintConfig;
